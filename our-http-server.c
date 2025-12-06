@@ -1143,8 +1143,6 @@ WriteResult write_crlf(Writer *writer) {
 
 WriteResult write_response_status_line(HttpVersion version, StatusCode status,
                                        Writer *writer) {
-  WriteResult result;
-
   String version_str = version_to_string(version);
   WRITE_OR_ERR(write_string(writer, version_str));
   WRITE_OR_ERR(write_byte(writer, ' '));
@@ -1159,8 +1157,6 @@ WriteResult write_response_status_line(HttpVersion version, StatusCode status,
 }
 
 WriteResult write_response_header(Header header, Writer *writer) {
-  WriteResult result;
-
   WRITE_OR_ERR(write_string(writer, header.key));
   WRITE_OR_ERR(write_bytes(writer, HEADER_DELIMETER, strlen(HEADER_DELIMETER)));
   WRITE_OR_ERR(write_string(writer, header.value));
@@ -1179,8 +1175,6 @@ WriteResult write_response_headers(Headers headers, Writer *writer) {
 
 WriteResult write_error_html(HttpVersion version, StatusCode status,
                              Writer *writer) {
-  WriteResult result;
-
   Header contentType;
   contentType.key = string_from_cstring("Content-Type");
   contentType.value = string_from_cstring("text/html");
@@ -1198,7 +1192,6 @@ WriteResult write_error_html(HttpVersion version, StatusCode status,
 
 WriteResult write_replace(Reader *in, String *needles, String *replacements,
                           size_t needles_count, Writer *out) {
-  WriteResult result;
   for (; in->offset < in->len;) {
     int match_idx = -1;
     for (int i = 0; i < needles_count; i++) {
@@ -1228,8 +1221,6 @@ WriteResult write_replace(Reader *in, String *needles, String *replacements,
 
 WriteResult write_echo_html(HttpVersion version, StatusCode status,
                             Request request, Writer *writer) {
-  WriteResult result;
-
   Header contentType;
   contentType.key = string_from_cstring("Content-Type");
   contentType.value = string_from_cstring("text/html");
